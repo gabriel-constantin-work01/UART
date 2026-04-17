@@ -30,8 +30,6 @@ reg [7:0] tx_parallel_in;
 wire tx_serial_out;
 wire busy;
 
-always #5 clk = ~clk;
-
 Tx uut(
     .clk(clk),
     .reset(reset),
@@ -42,4 +40,25 @@ Tx uut(
     );
 
     // TODO: Tesbench Logic
+    
+    always #5 clk = ~clk;
+    
+    initial begin
+    
+        reset = 1;
+        start = 0;
+        tx_parallel_in = 8'b0;
+        
+        #100;
+        
+        reset = 0;
+        tx_parallel_in = 8'h55;
+        start = 1;
+        
+        #10;
+        
+        start = 0;
+        #1041700; // 10bits x 10ns x 10417 counts
+        $finish;
+    end
 endmodule

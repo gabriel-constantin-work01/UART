@@ -34,7 +34,7 @@ module Tx(
     reg [2:0] bit_counter;
     reg [1:0] state;
     
-    parameter counter_max = 10417; // 100MHz / 6900 ≈ 10417
+    parameter counter_max = 10417; // 100MHz / 9600 ≈ 10417
     parameter data_bits = 7;
     
     parameter IDLE  = 2'b00;
@@ -79,14 +79,15 @@ module Tx(
                 end
                 
                 DATA: begin
-                    tx_serial_out <= shift_reg[bit_counter];
+                    tx_serial_out <= shift_reg[0];
                     if (baud_counter < counter_max)
                         baud_counter <= baud_counter + 1;
                     else begin
                         baud_counter <= 0;
-                        if (bit_counter < data_bits)
+                        if (bit_counter < data_bits)begin
+                            shift_reg <= shift_reg >> 1;
                             bit_counter <= bit_counter + 1;
-                        else
+                        end else
                             state <= STOP;
                     end
                 end
