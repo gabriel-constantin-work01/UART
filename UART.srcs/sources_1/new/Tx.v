@@ -34,7 +34,7 @@ module Tx(
     reg [2:0] bit_counter;
     reg [1:0] state;
     
-    parameter counter_max = 10417; // 100MHz / 6900 ≈ 10417
+    parameter counter_max = 10417; // 100MHz / 9600 ≈ 10417
     parameter data_bits = 7;
     
     parameter IDLE  = 2'b00;
