@@ -28,6 +28,12 @@ module Rx_tb();
     reg clk = 0;
     reg reset;
     
+   wire deB_reset; // Clean reset signal
+   wire deB_send; // Clean send signal
+   wire busy; // Tx cannot load new data
+   wire done; // Rx is done sending data
+   wire serial; // Serial data communication from Tx to Rx
+   
 Rx uut(
     .rx_serial_in(rx_serial_in),
     .rx_parallel_out(rx_parallel_out),
